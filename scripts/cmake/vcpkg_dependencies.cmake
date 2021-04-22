@@ -1,0 +1,12 @@
+if (DEFINED CMAKE_TOOLCHAIN_FILE)
+    message(STATUS "nova: Using toolchain file '${CMAKE_TOOLCHAIN_FILE}'")
+elseif(DEFINED ENV{VCPKG_DIR})
+    set(CMAKE_TOOLCHAIN_FILE $ENV{VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake)
+    message(STATUS "nova: Setting toolchain file '${CMAKE_TOOLCHAIN_FILE}'")
+else()
+    message(FATAL_ERROR "nova: CMake toolchain file not set! Either define it in the cmake invocation, or set the environment variable VCPKG_DIR")
+endif()
+
+if (NOT EXISTS ${CMAKE_TOOLCHAIN_FILE})
+    message(FATAL_ERROR "nova: Toolchain file is set, but does not exist '${CMAKE_TOOLCHAIN_FILE}'")
+endif()
